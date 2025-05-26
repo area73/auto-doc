@@ -1,0 +1,27 @@
+{
+  "name": "auto-doc",
+  "version": "1.0.0",
+  "description": "IA Auto doc for github",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/area73/auto-doc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/area73/auto-doc/issues"
+  },
+  "homepage": "https://github.com/area73/auto-doc#readme",
+  "dependencies": {
+    "@octokit/rest": "^22.0.0",
+    "dotenv": "^16.5.0",
+    "openai": "^4.103.0",
+    "simple-git": "^3.27.0"
+  }
+}
