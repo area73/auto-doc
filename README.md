@@ -1,2 +1,2 @@
-# auto-doc
-IA Auto doc for github
+# Auto-Doc IA
+Inteligencia Artificial para la automatización de documentación en GitHub.
