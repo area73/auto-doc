@@ -1,36 +1,31 @@
-name: Auto Improve Documentation
+name: Revisar Documentación de Repos
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: "0 8 * * 1" # Cada lunes a las 08:00 UTC
+    - cron: "0 8 * * 1" # lunes a las 08:00 UTC
+  workflow_dispatch:
 
 jobs:
-  auto-doc:
+  revisar-docs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: Install dependencies
+      - name: Instalar dependencias
         run: npm install
 
-      - name: Setup Git user
+      - name: Configurar Git
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Authenticate GitHub CLI
-        run: gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
-
-      - name: Run script
+      - name: Ejecutar mejora de documentación en múltiples repos
         env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node index.js
