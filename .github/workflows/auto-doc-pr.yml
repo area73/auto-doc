@@ -1,31 +1,37 @@
-name: Revisar Documentación de Repos
+name: Revisión automática de documentación Markdown
 
 on:
-  schedule:
-    - cron: "0 8 * * 1" # lunes a las 08:00 UTC
   workflow_dispatch:
+    inputs:
+      target:
+        description: "Nombre de usuario o de organización de GitHub"
+        required: true
+        default: "area73"
 
 jobs:
-  revisar-docs:
+  auto-doc-review:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: Instalar dependencias
+      - name: Install dependencies
         run: npm install
 
-      - name: Configurar Git
+      - name: Setup Git identity
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Ejecutar mejora de documentación en múltiples repos
+      - name: Run Markdown reviewer
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TARGET_GITHUB_ACCOUNT: ${{ github.event.inputs.target }}
         run: node index.js
