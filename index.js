@@ -3,17 +3,15 @@ const fs = require("fs");
 const path = require("path");
 const { Octokit } = require("@octokit/rest");
 const simpleGit = require("simple-git");
-const { Configuration, OpenAIApi } = require("openai");
-
+const OpenAI = require("openai");
 const ORG_NAME = "nombre-de-tu-organizacion";
 const BRANCH_NAME = "auto-doc-update";
 const TMP_DIR = "./tmp";
 
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
-const openai = new OpenAIApi(
-  new Configuration({ apiKey: process.env.OPENAI_API_KEY })
-);
-
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 async function getRepos(org) {
   const res = await octokit.repos.listForOrg({
     org,
@@ -24,12 +22,11 @@ async function getRepos(org) {
 }
 
 async function improve(content) {
-  const res = await openai.createChatCompletion({
+  const res = await openai.chat.completions.create({
     model: "gpt-4",
-    messages: [
-      { role: "user", content: `Mejora este archivo Markdown:\n\n${content}` },
-    ],
+    messages: [{ role: "user", content: prompt }],
   });
+
   return res.data.choices[0].message.content;
 }
 
