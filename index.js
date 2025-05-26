@@ -4,7 +4,7 @@ const path = require("path");
 const { Octokit } = require("@octokit/rest");
 const simpleGit = require("simple-git");
 const OpenAI = require("openai");
-const ORG_NAME = "nombre-de-tu-organizacion";
+const ORG_NAME = "area73";
 const BRANCH_NAME = "auto-doc-update";
 const TMP_DIR = "./tmp";
 
